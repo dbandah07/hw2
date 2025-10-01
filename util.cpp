@@ -3,6 +3,8 @@
 #include <cctype>
 #include <algorithm>
 #include "util.h"
+// #include <string>
+#include <set>
 
 using namespace std;
 std::string convToLower(std::string src)
@@ -15,17 +17,38 @@ std::string convToLower(std::string src)
     to a set of words based on the criteria given in the assignment **/
 std::set<std::string> parseStringToWords(string rawWords)
 {
+  // string of many words, split them into individual keywords (at punctuation, 2 char words)
 
+  std::set<std::string> words; 
+  std::string word; 
 
+  // for (size_t i = 0; i < rawWords.length(); i++) {
+  //   if (rawWords[i] == '.' || rawWords[i] == '\'') {
+  //       words.insert(word); // apend keyword 
+  //   }
+  //   word += rawWords[i];
+  // }
 
+  for (size_t i = 0; i < rawWords.length(); ++i) {
+    char c = rawWords[i];
 
+    if (c == ' ' || c == '.' || c == '\'') {
+      if (!word.empty()) {
+        words.insert(word);
+        word.clear();
+      }
+    }
+    else {
+      word += c;
+    }
+  }
 
+  if (!word.empty()) {
+    words.insert(word);
+  }
 
-
-
-
-
-}
+  return words;
+} 
 
 /**************************************************
  * COMPLETED - You may use the following functions

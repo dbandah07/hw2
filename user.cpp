@@ -24,6 +24,8 @@ std::string User::getName() const
 
 double User::getBalance() const
 {
+    // ADDING FOR DEBUG:
+    // std::cout << "DEBUG: IN getBalance(); balance = " << balance_ << std::endl;
     return balance_;
 }
 

@@ -9,6 +9,7 @@
 #include "db_parser.h"
 #include "product_parser.h"
 #include "util.h"
+#include "mydatastore.h"
 
 using namespace std;
 struct ProdNameSorter {
@@ -29,7 +30,7 @@ int main(int argc, char* argv[])
      * Declare your derived DataStore object here replacing
      *  DataStore type to your derived type
      ****************/
-    DataStore ds;
+    MyDataStore ds;
 
 
 
@@ -62,6 +63,7 @@ int main(int argc, char* argv[])
     cout << "====================================" << endl;
 
     vector<Product*> hits;
+
     bool done = false;
     while(!done) {
         cout << "\nEnter command: " << endl;
@@ -100,9 +102,89 @@ int main(int argc, char* argv[])
                 done = true;
             }
 	    /* Add support for other commands here */
+            else if ( cmd == "ADD" ) {
+              string u;
+              int cnt;
 
+              if (ss >> u >> cnt) {
+                // cout << "DEBUG: entered ADD if" << endl; 
+                if (cnt < 1 || cnt > (int)hits.size()) { // valid
+                  // cout << "DEBUG: entered second if" << endl;
+                  cout << "Invalid request" << endl;
+                }
+                else {
+                  User* found_u = nullptr;
+                  for (User* user : ds.getUsers()) {
+                    // cout << "DEBUG: entered for loop" << endl;
+                    if (convToLower(user->getName()) == convToLower(u)) {
+                      // cout << "DEBUG: entered if inside for loop" << endl;
+                      found_u = user;
+                      break;
+                    }
+                  }
+                    
+                  if (found_u == nullptr) {
+                    cout << "Invalid request" << endl;
+                  }
+                  else {
+                    // cout << "DEBUG: entered last if before exit" << endl;
+                    Product* p = hits[cnt-1];
+                    ds.add_to_cart(found_u, p);
+                  }
+                }
+              }
+            }
+            
 
+            else if ( cmd == "VIEWCART" ) {
+              string u;
+              User* found_u = nullptr;
 
+              if (ss >> u) {
+                for (User* user : ds.getUsers()) {
+                  // cout << "DEBUG: entered for loop, found user: " << user->getName() << endl;
+                  if (convToLower(user->getName()) == convToLower(u)) {
+                    // cout << "DEBUG: entered if statement inside if" << endl;
+                    found_u = user;
+                    break;
+                  }
+                }
+              }
+
+              if (found_u == nullptr) {
+                cout << "Invalid username" << endl;
+              }
+              else if (found_u != nullptr) {
+                // cout << "DEBUG: entered if before exit" << endl; 
+                ds.view_cart(found_u);
+              }
+            }
+            
+            else if ( cmd == "BUYCART" ) {
+              string u;
+              User* found_u = nullptr;
+              
+              if (ss >> u) {
+                for (User* user : ds.getUsers()) {
+                  // cout << "DEBUG: entered for loop" << endl;
+                  if (convToLower(user->getName()) == convToLower(u)) {
+                    // cout << "DEBUG: entered if inside for" << endl;
+                    found_u = user;
+                    break;
+                  }
+                }
+              }
+
+              if (found_u == nullptr) {
+                cout << "Invalid username" << endl;
+              }
+
+              else {
+                // cout << "DEBUG: entered last if before exit" << endl;
+                ds.buy_cart(found_u);
+                // cout << "Bought " << found_u->getName() << " cart." << endl;
+              }
+            }
 
             else {
                 cout << "Unknown command" << endl;
