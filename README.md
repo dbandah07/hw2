@@ -1,7 +1,7 @@
 # HW2: Inheritance, Polymorphism, and STL
 
 ## Overview
-This program is a C++ implementation of a **simplified e-commerce data store system (Amazon)**, developed for the course **Data Structures & Object-Oriented**.  
+This program is a C++ implementation of a **simplified e-commerce data store system (Amazon)**, developed for the course **Data Structures & Object-Oriented Design.**
 It models products, users, and purchasing behavior while supporting structured input parsing and command-based interaction.
 
 The system is designed to simulate core backend functionality of an online marketplace by managing product data, user accounts, and search operations through a modular and extensible architecture.
