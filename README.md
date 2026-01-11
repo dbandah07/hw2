@@ -15,3 +15,6 @@ The system is designed to simulate core backend functionality of an online marke
 - Modular separation of parsing, storage, and business logic
 - Command-driven interaction via standard input
 - Build automation using a Makefile
+
+## Notes
+Completed during Fall 2025. 
